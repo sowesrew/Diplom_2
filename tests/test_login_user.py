@@ -12,6 +12,6 @@ class TestLoginNewUser:
 
     @allure.title("Проверка логина пользователя с некорректными данными")
     @allure.description("Проверяем логин пользователя, если данные входа некорректны")
-    def test_login_user(self):
+    def test_login_no_such_username_and_password(self):
         user = MethodsUser.login_no_such_username_and_password()
         assert user.status_code == 401 and user.json()['message'] == 'email or password are incorrect'

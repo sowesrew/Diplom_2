@@ -1,8 +1,7 @@
 import requests
 import allure
 from helpers import DataGeneration
-from data import DataUrls
-from conftest import create_and_delete_user
+from data import DataUrls, DataOrder
 
 
 class MethodsUser:
@@ -56,3 +55,44 @@ class MethodsUser:
         response = requests.patch(DataUrls.BASE_URL + DataUrls.EDIT_USER, data=edit_field)
         return response
 
+
+class OrderUser:
+    @staticmethod
+    @allure.step("Создание заказа с ингредиентами")
+    def create_order_with_token(data_payload):
+        create = requests.post(DataUrls.BASE_URL + DataUrls.CREATE_USER, data=data_payload)
+        id_user = create.json()["accessToken"]
+        response = requests.post(DataUrls.BASE_URL + DataUrls.CREATE_ORDER, data=DataOrder.ingredient, headers={"Authorization": id_user})
+        return response
+
+    @staticmethod
+    @allure.step("Создание заказа с ингредиентами")
+    def create_order_without_token():
+        response = requests.post(DataUrls.BASE_URL + DataUrls.CREATE_ORDER, data=DataOrder.ingredient)
+        return response
+
+    @staticmethod
+    @allure.step("Создание заказа без ингредиентов")
+    def create_order_without_ingredients():
+        response = requests.post(DataUrls.BASE_URL + DataUrls.CREATE_ORDER, data={})
+        return response
+
+    @staticmethod
+    @allure.step("Создание заказа с некорректным хешем ингредиентов")
+    def create_order_with_incorrect_ingredient():
+        response = requests.post(DataUrls.BASE_URL + DataUrls.CREATE_ORDER, data=DataOrder.incorrect_burger)
+        return response
+
+    @staticmethod
+    @allure.step("Получение списка заказов авторизованного пользователя")
+    def receive_order_with_token(data_payload):
+        create = requests.post(DataUrls.BASE_URL + DataUrls.CREATE_USER, data=data_payload)
+        id_user = create.json()["accessToken"]
+        response = requests.get(DataUrls.BASE_URL + DataUrls.CREATE_ORDER, headers={"Authorization": id_user})
+        return response
+
+    @staticmethod
+    @allure.step("Получение списка заказов авторизованного пользователя")
+    def receive_order_without_token():
+        response = requests.get(DataUrls.BASE_URL + DataUrls.CREATE_ORDER)
+        return response

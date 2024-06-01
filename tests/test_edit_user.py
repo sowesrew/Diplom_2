@@ -1,12 +1,8 @@
-import json
-import requests
 import allure
 import pytest
 from burger_api import MethodsUser
 from conftest import create_and_delete_edit_user
-from data import DataUrls
 from helpers import DataUpdateUser
-from faker import Faker
 
 
 class TestEditUser:
