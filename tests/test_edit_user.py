@@ -1,7 +1,12 @@
+import json
+import requests
 import allure
 import pytest
 from burger_api import MethodsUser
-from conftest import create_and_delete_user
+from conftest import create_and_delete_edit_user
+from data import DataUrls
+from helpers import DataUpdateUser
+from faker import Faker
 
 
 class TestEditUser:
@@ -10,10 +15,18 @@ class TestEditUser:
     @pytest.mark.parametrize(
         'edit_field',
         [
-            ['Svetlana'],
-            ['1231jhjrwh@ya.ru'],
-            ['4rwerwret4']
+            {"name": "Svetlana"},
+            {"email": DataUpdateUser.generation_email()},
+            {"password": "4rwerwret4"}
         ]
     )
-    #def test_success_edit_user(self, edit_field, create_and_delete_user):
+    def test_success_edit_user(self, edit_field, create_and_delete_edit_user):
+        user = MethodsUser.create_and_edit_user(edit_field, create_and_delete_edit_user)
+        assert user.status_code == 200 and '"success":true' in user.text
 
+
+    @allure.title('Проверка редактирования данных пользователя без авторизации')
+    @allure.description('Проверка редактирования данных пользователя без авторизационного токена')
+    def test_not_token_edit_user(self):
+        user = MethodsUser.create_and_edit_not_token_user(edit_field={"name": "Svetlana"})
+        assert user.status_code == 401 and user.json()['message'] == 'You should be authorised'

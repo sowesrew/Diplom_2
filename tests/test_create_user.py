@@ -14,7 +14,7 @@ class TestRegisterNewUser:
     @allure.description("Создаём пользователя повторно, убеждаемся, что приходит верный код ответа")
     def test_duplicate_create_user(self, create_and_delete_user):
         user = MethodsUser.dublicate_create_user(create_and_delete_user)
-        assert user.status_code == 403 and '"message":"User already exists"' in user.text
+        assert user.status_code == 403 and user.json()['message'] == 'User already exists'
 
     @allure.title("Проверка создания пользователя, но одно из обязательных полей не заполнено")
     @allure.description("Создаём пользователя без указания одного из обязательных полей")

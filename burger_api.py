@@ -46,10 +46,13 @@ class MethodsUser:
 
     @staticmethod
     @allure.step("Создание, логин и изменение данных пользователя")
-    def create_login_edit_user(data_payload, data_edit):
-        requests.post(DataUrls.BASE_URL + DataUrls.CREATE_USER, data=data_payload)
-        login = requests.post(DataUrls.BASE_URL + DataUrls.LOGIN_USER, data=data_payload)
-        id_user = login.json()["accessToken"]
-        response = requests.patch(DataUrls.BASE_URL + DataUrls.LOGIN_USER, data=data_edit, headers={"Authorization": id_user})
+    def create_and_edit_user(edit_field, id_user):
+        response = requests.patch(DataUrls.BASE_URL + DataUrls.EDIT_USER, headers={"Authorization": id_user}, data=edit_field)
+        return response
+
+    @staticmethod
+    @allure.step("Попытка изменения данных пользователя без авторизационного токена")
+    def create_and_edit_not_token_user(edit_field):
+        response = requests.patch(DataUrls.BASE_URL + DataUrls.EDIT_USER, data=edit_field)
         return response
 

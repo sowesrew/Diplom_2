@@ -1,10 +1,11 @@
 import random
 import string
 import json
-#from faker import Faker
+from faker import Faker
 
 
 class DataGeneration:
+
     @classmethod
     def create_new_user_and_return_login_password(cls):
 
@@ -22,9 +23,19 @@ class DataGeneration:
 
         payload = {
             "email": email,
-            "password": password,
+            "password": 'password1',
             "name": name
         }
 
         # возвращаем список
         return payload
+
+
+class DataUpdateUser:
+    @staticmethod
+    def generation_email():
+        fake = Faker(locale="ru_Ru")
+        email = fake.email()
+
+        return str(email)
+
