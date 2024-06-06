@@ -58,7 +58,7 @@ class MethodsUser:
 
 class OrderUser:
     @staticmethod
-    @allure.step("Создание заказа с ингредиентами")
+    @allure.step("Создание заказа с ингредиентами с авторизационным токеном")
     def create_order_with_token(data_payload):
         create = requests.post(DataUrls.BASE_URL + DataUrls.CREATE_USER, data=data_payload)
         id_user = create.json()["accessToken"]
@@ -66,7 +66,7 @@ class OrderUser:
         return response
 
     @staticmethod
-    @allure.step("Создание заказа с ингредиентами")
+    @allure.step("Создание заказа с ингредиентами без авторизационного токена")
     def create_order_without_token():
         response = requests.post(DataUrls.BASE_URL + DataUrls.CREATE_ORDER, data=DataOrder.ingredient)
         return response
