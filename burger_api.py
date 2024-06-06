@@ -19,7 +19,7 @@ class MethodsUser:
         return response
 
     @staticmethod
-    @allure.step("Попытка создания пользователя без обязательного поля")
+    @allure.step("Попытка создания пользователя без поля Пароль")
     def not_once_required_field():
         data_email = DataGeneration.create_new_user_and_return_login_password()["email"]
         data = {
