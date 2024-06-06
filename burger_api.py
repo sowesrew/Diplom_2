@@ -44,7 +44,7 @@ class MethodsUser:
         return response
 
     @staticmethod
-    @allure.step("Создание, логин и изменение данных пользователя")
+    @allure.step("Изменение данных пользователя с авторизационным токеном")
     def create_and_edit_user(edit_field, id_user):
         response = requests.patch(DataUrls.BASE_URL + DataUrls.EDIT_USER, headers={"Authorization": id_user}, data=edit_field)
         return response
