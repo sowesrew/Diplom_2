@@ -37,7 +37,7 @@ class MethodsUser:
         return response
 
     @staticmethod
-    @allure.step("Логин пользователя в систему c неверными данными")
+    @allure.step("Тест на авторизацию с несуществующим в системе данными")
     def login_no_such_username_and_password():
         data_payload = DataGeneration.generated_user_data_and_return_login_password()
         response = requests.post(DataUrls.BASE_URL + DataUrls.LOGIN_USER, data=data_payload)
