@@ -7,7 +7,7 @@ from faker import Faker
 class DataGeneration:
 
     @classmethod
-    def create_new_user_and_return_login_password(cls):
+    def generated_user_data_and_return_login_password(cls):
 
         def random_email():
             return ''.join(random.choice(string.ascii_letters) for _ in range(10)) + "@ya.ru"

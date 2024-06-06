@@ -21,7 +21,7 @@ class MethodsUser:
     @staticmethod
     @allure.step("Попытка создания пользователя без поля Пароль")
     def not_once_required_field():
-        data_email = DataGeneration.create_new_user_and_return_login_password()["email"]
+        data_email = DataGeneration.generated_user_data_and_return_login_password()["email"]
         data = {
             "email": data_email,
             "password": ""
@@ -39,7 +39,7 @@ class MethodsUser:
     @staticmethod
     @allure.step("Логин пользователя в систему c неверными данными")
     def login_no_such_username_and_password():
-        data_payload = DataGeneration.create_new_user_and_return_login_password()
+        data_payload = DataGeneration.generated_user_data_and_return_login_password()
         response = requests.post(DataUrls.BASE_URL + DataUrls.LOGIN_USER, data=data_payload)
         return response
 
